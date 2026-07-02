@@ -1,4 +1,6 @@
 ---
+schemaVersion: "1.0.0"
+status: "published"
 title: "Introducing PageKit"
 excerpt: "A beautiful, fast, content-driven template system you can launch in minutes."
 date: "2026-06-01"

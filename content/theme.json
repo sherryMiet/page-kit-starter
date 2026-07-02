@@ -1,4 +1,5 @@
 {
+  "schemaVersion": "1.0.0",
   "name": "Indigo",
   "defaultMode": "system",
   "radius": "0.75rem",

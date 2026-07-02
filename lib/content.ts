@@ -72,6 +72,7 @@ export function getAllPosts(): Post[] {
       const frontmatter = postFrontmatterSchema.parse(data);
       return { ...frontmatter, slug, content, readingTime: readingTime(content) };
     })
+    .filter((post) => post.status !== "draft")
     .sort((a, b) => +new Date(b.date) - +new Date(a.date));
 }
 

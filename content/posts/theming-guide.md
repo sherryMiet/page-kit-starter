@@ -1,4 +1,6 @@
 ---
+schemaVersion: "1.0.0"
+status: "published"
 title: "Theming PageKit"
 excerpt: "How the token-based theme engine works, and how to make it yours."
 date: "2026-06-08"

@@ -37,6 +37,7 @@ const ctaSchema = z.object({
 /* ------------------------------------------------------------------ */
 
 export const profileSchema = z.object({
+  schemaVersion: z.string().optional(),
   siteName: z.string(),
   tagline: z.string().optional(),
   description: z.string().optional(),
@@ -87,6 +88,7 @@ const colorSetSchema = z.object({
 export type ColorSet = z.infer<typeof colorSetSchema>;
 
 export const themeSchema = z.object({
+  schemaVersion: z.string().optional(),
   name: z.string().default("Default"),
   defaultMode: z.enum(["light", "dark", "system"]).default("system"),
   radius: z.string().default("0.75rem"),
@@ -106,6 +108,7 @@ export type Theme = z.infer<typeof themeSchema>;
 /* ------------------------------------------------------------------ */
 
 export const navigationSchema = z.object({
+  schemaVersion: z.string().optional(),
   header: z.object({
     links: z.array(linkSchema),
     cta: ctaSchema.optional(),
@@ -219,6 +222,7 @@ export type Section = z.infer<typeof sectionSchema>;
 export type SectionType = Section["type"];
 
 export const pageSchema = z.object({
+  schemaVersion: z.string().optional(),
   title: z.string(),
   description: z.string().optional(),
   sections: z.array(sectionSchema),
@@ -230,6 +234,7 @@ export type Page = z.infer<typeof pageSchema>;
 /* ------------------------------------------------------------------ */
 
 export const postFrontmatterSchema = z.object({
+  schemaVersion: z.string().optional(),
   title: z.string(),
   excerpt: z.string().optional(),
   date: z.string(),
@@ -238,6 +243,8 @@ export const postFrontmatterSchema = z.object({
   cover: imageSchema.optional(),
   featured: z.boolean().default(false),
   author: z.string().optional(),
+  // Draft posts stay in the repository but are never rendered on the site.
+  status: z.enum(["draft", "published"]).default("published"),
 });
 export type PostFrontmatter = z.infer<typeof postFrontmatterSchema>;
 
