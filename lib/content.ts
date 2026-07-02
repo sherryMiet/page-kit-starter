@@ -1,0 +1,88 @@
+import "server-only";
+import fs from "node:fs";
+import path from "node:path";
+import matter from "gray-matter";
+import {
+  navigationSchema,
+  pageSchema,
+  postFrontmatterSchema,
+  profileSchema,
+  themeSchema,
+  type Navigation,
+  type Page,
+  type Post,
+  type Profile,
+  type Theme,
+} from "./schemas";
+
+/**
+ * Loads and validates all editable content from the `content/` directory.
+ * Every reader runs the raw JSON/markdown through a Zod schema so malformed
+ * content fails loudly with a clear message instead of rendering broken UI.
+ */
+
+const CONTENT_DIR = path.join(process.cwd(), "content");
+
+function readJson<T>(file: string, parse: (data: unknown) => T): T {
+  const full = path.join(CONTENT_DIR, file);
+  try {
+    const raw = fs.readFileSync(full, "utf8");
+    return parse(JSON.parse(raw));
+  } catch (err) {
+    throw new Error(
+      `Failed to load content "${file}": ${(err as Error).message}`,
+    );
+  }
+}
+
+export function getProfile(): Profile {
+  return readJson("profile.json", (d) => profileSchema.parse(d));
+}
+
+export function getTheme(): Theme {
+  return readJson("theme.json", (d) => themeSchema.parse(d));
+}
+
+export function getNavigation(): Navigation {
+  return readJson("navigation.json", (d) => navigationSchema.parse(d));
+}
+
+export function getPage(name: string): Page {
+  return readJson(`pages/${name}.json`, (d) => pageSchema.parse(d));
+}
+
+/* -------------------------------- Blog -------------------------------- */
+
+const POSTS_DIR = path.join(CONTENT_DIR, "posts");
+
+function readingTime(text: string): number {
+  const words = text.trim().split(/\s+/).length;
+  return Math.max(1, Math.round(words / 200));
+}
+
+export function getAllPosts(): Post[] {
+  if (!fs.existsSync(POSTS_DIR)) return [];
+  return fs
+    .readdirSync(POSTS_DIR)
+    .filter((f) => f.endsWith(".md"))
+    .map((file) => {
+      const slug = file.replace(/\.md$/, "");
+      const raw = fs.readFileSync(path.join(POSTS_DIR, file), "utf8");
+      const { data, content } = matter(raw);
+      const frontmatter = postFrontmatterSchema.parse(data);
+      return { ...frontmatter, slug, content, readingTime: readingTime(content) };
+    })
+    .sort((a, b) => +new Date(b.date) - +new Date(a.date));
+}
+
+export function getPost(slug: string): Post | undefined {
+  return getAllPosts().find((p) => p.slug === slug);
+}
+
+export function getCategories(): { name: string; count: number }[] {
+  const counts = new Map<string, number>();
+  for (const post of getAllPosts()) {
+    counts.set(post.category, (counts.get(post.category) ?? 0) + 1);
+  }
+  return [...counts.entries()].map(([name, count]) => ({ name, count }));
+}

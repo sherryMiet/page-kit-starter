@@ -1,0 +1,96 @@
+{
+  "title": "PageKit — Ship a beautiful site in minutes",
+  "description": "A fast, customizable website template system. Edit everything through content — no code required.",
+  "sections": [
+    {
+      "type": "hero",
+      "eyebrow": "Open source · MIT",
+      "heading": "Ship a beautiful site in minutes",
+      "subheading": "PageKit is a fast, customizable template system. Compose your page from ready-made sections and edit every word, color, and link through content — no code required.",
+      "ctas": [
+        { "label": "Get Started", "href": "/#contact", "variant": "primary" },
+        { "label": "View on GitHub", "href": "https://github.com/pagekit", "variant": "secondary" }
+      ]
+    },
+    {
+      "type": "about",
+      "heading": "Content-driven by design",
+      "body": "Every section on this page is defined in a JSON file. Swap the theme, reorder sections, or rewrite copy without opening a component. PageKit handles the rendering, accessibility, and responsive layout for you.",
+      "stats": [
+        { "label": "Prebuilt sections", "value": "18+" },
+        { "label": "Lighthouse score", "value": "100" },
+        { "label": "Lines to launch", "value": "0" }
+      ]
+    },
+    {
+      "type": "features",
+      "heading": "Everything you need to launch",
+      "subheading": "Thoughtful defaults, fully customizable.",
+      "items": [
+        { "title": "Theme engine", "description": "Light, dark, and custom palettes driven entirely by theme.json.", "icon": "palette" },
+        { "title": "Composable sections", "description": "Reorder and configure sections from a single JSON page definition.", "icon": "layers" },
+        { "title": "Accessible by default", "description": "Semantic markup, keyboard nav, and AA contrast out of the box.", "icon": "accessibility" },
+        { "title": "Fast", "description": "Static-first rendering with Next.js App Router. Instant loads.", "icon": "zap" },
+        { "title": "Responsive", "description": "Fluid layouts that look right from phone to widescreen.", "icon": "smartphone" },
+        { "title": "Markdown blog", "description": "Write posts in Markdown with frontmatter. Categories included.", "icon": "pen-line" }
+      ]
+    },
+    {
+      "type": "pricing",
+      "heading": "Simple, honest pricing",
+      "subheading": "Start free. Upgrade when you grow.",
+      "plans": [
+        {
+          "name": "Starter",
+          "price": "$0",
+          "period": "forever",
+          "description": "Everything to launch a personal site.",
+          "features": ["All landing sections", "Markdown blog", "Light & dark themes", "Community support"],
+          "cta": { "label": "Get Started", "href": "/#contact", "variant": "secondary" }
+        },
+        {
+          "name": "Pro",
+          "price": "$12",
+          "period": "per month",
+          "description": "For creators who want more.",
+          "features": ["Everything in Starter", "Portfolio sections", "Custom domains", "Priority support", "Analytics"],
+          "cta": { "label": "Go Pro", "href": "/#contact", "variant": "primary" },
+          "featured": true
+        },
+        {
+          "name": "Team",
+          "price": "$49",
+          "period": "per month",
+          "description": "For teams shipping many sites.",
+          "features": ["Everything in Pro", "Unlimited sites", "Shared themes", "Roles & permissions", "SSO"],
+          "cta": { "label": "Contact Sales", "href": "/#contact", "variant": "secondary" }
+        }
+      ]
+    },
+    {
+      "type": "testimonials",
+      "heading": "Loved by makers",
+      "items": [
+        { "quote": "I launched my portfolio in an afternoon and it looks better than sites I paid thousands for.", "author": "Jamie Chen", "role": "Designer", "avatar": { "src": "https://i.pravatar.cc/100?img=32", "alt": "Jamie Chen" } },
+        { "quote": "The content-first approach means my non-technical client can update copy without breaking anything.", "author": "Sam Okafor", "role": "Freelance Developer", "avatar": { "src": "https://i.pravatar.cc/100?img=15", "alt": "Sam Okafor" } },
+        { "quote": "Theme switching is genuinely a one-line change. This is how templates should work.", "author": "Priya Nair", "role": "Indie Hacker", "avatar": { "src": "https://i.pravatar.cc/100?img=45", "alt": "Priya Nair" } }
+      ]
+    },
+    {
+      "type": "faq",
+      "heading": "Frequently asked questions",
+      "items": [
+        { "question": "Do I need to know how to code?", "answer": "No. Every piece of content lives in JSON and Markdown files, and a dashboard can edit them with forms generated from the schema." },
+        { "question": "Can I change the colors and fonts?", "answer": "Yes — the entire visual system is defined in theme.json. Edit the tokens and the whole site re-themes instantly, including dark mode." },
+        { "question": "Is it really free?", "answer": "The Starter tier is free forever and open source under the MIT license. Pro and Team add hosted conveniences." },
+        { "question": "What is it built with?", "answer": "Next.js App Router, TypeScript, and Tailwind CSS — modern, fast, and well-documented." }
+      ]
+    },
+    {
+      "type": "contact",
+      "heading": "Ready to build?",
+      "subheading": "Tell us what you're making and we'll help you get started.",
+      "email": "hello@pagekit.dev"
+    }
+  ]
+}

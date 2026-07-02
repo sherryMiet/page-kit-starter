@@ -1,0 +1,23 @@
+{
+  "siteName": "PageKit",
+  "tagline": "Ship a beautiful site in minutes",
+  "description": "A fast, customizable website template system. Edit everything through content — no code required.",
+  "author": {
+    "name": "Alex Rivera",
+    "role": "Founder & Designer",
+    "bio": "Building tools that make the web feel effortless. Previously design systems at scale.",
+    "avatar": {
+      "src": "https://i.pravatar.cc/200?img=12",
+      "alt": "Alex Rivera"
+    }
+  },
+  "contact": {
+    "email": "hello@pagekit.dev",
+    "location": "Remote — Worldwide"
+  },
+  "socials": [
+    { "platform": "GitHub", "url": "https://github.com/pagekit" },
+    { "platform": "Twitter", "url": "https://twitter.com/pagekit" },
+    { "platform": "LinkedIn", "url": "https://linkedin.com/company/pagekit" }
+  ]
+}
