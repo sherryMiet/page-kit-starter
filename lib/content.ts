@@ -51,6 +51,17 @@ export function getPage(name: string): Page {
   return readJson(`pages/${name}.json`, (d) => pageSchema.parse(d));
 }
 
+const PAGES_DIR = path.join(CONTENT_DIR, "pages");
+
+/** Names of every page file under content/pages/, e.g. ["landing", "about"]. */
+export function getPageNames(): string[] {
+  if (!fs.existsSync(PAGES_DIR)) return [];
+  return fs
+    .readdirSync(PAGES_DIR)
+    .filter((f) => f.endsWith(".json"))
+    .map((f) => f.replace(/\.json$/, ""));
+}
+
 /* -------------------------------- Blog -------------------------------- */
 
 const POSTS_DIR = path.join(CONTENT_DIR, "posts");
