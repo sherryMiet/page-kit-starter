@@ -133,3 +133,28 @@ export const navigationSchema = z.object({
   }),
 });
 export type NavigationContent = z.infer<typeof navigationSchema>;
+
+/* ------------------------------------------------------------------ */
+/* Blog post frontmatter (posts/*.md)                                  */
+/* ------------------------------------------------------------------ */
+
+export const postFrontmatterSchema = z.object({
+  schemaVersion: z.string().optional(),
+  title: z.string(),
+  excerpt: z.string().optional(),
+  date: z.string(),
+  category: z.string().default("General"),
+  tags: z.array(z.string()).default([]),
+  cover: imageSchema.optional(),
+  featured: z.boolean().default(false),
+  author: z.string().optional(),
+  // Draft posts stay in the repository but are never rendered on the site.
+  status: z.enum(["draft", "published"]).default("published"),
+});
+export type PostFrontmatter = z.infer<typeof postFrontmatterSchema>;
+
+export type Post = PostFrontmatter & {
+  slug: string;
+  content: string;
+  readingTime: number;
+};
