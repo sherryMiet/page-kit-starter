@@ -1,97 +1,314 @@
 {
-  "schemaVersion": "1.0.0",
+  "version": 1,
+  "slug": "landing",
   "title": "PageKit — Ship a beautiful site in minutes",
-  "description": "A fast, customizable website template system. Edit everything through content — no code required.",
-  "sections": [
+  "meta": {
+    "description": "A fast, customizable website template system. Edit everything through content — no code required."
+  },
+  "blocks": [
     {
-      "type": "hero",
-      "eyebrow": "Open source · MIT",
-      "heading": "Ship a beautiful site in minutes",
-      "subheading": "PageKit is a fast, customizable template system. Compose your page from ready-made sections and edit every word, color, and link through content — no code required.",
-      "ctas": [
-        { "label": "Get Started", "href": "/#contact", "variant": "primary" },
-        { "label": "View on GitHub", "href": "https://github.com/pagekit", "variant": "secondary" }
-      ]
-    },
-    {
-      "type": "about",
-      "heading": "Content-driven by design",
-      "body": "Every section on this page is defined in a JSON file. Swap the theme, reorder sections, or rewrite copy without opening a component. PageKit handles the rendering, accessibility, and responsive layout for you.",
-      "stats": [
-        { "label": "Prebuilt sections", "value": "18+" },
-        { "label": "Lighthouse score", "value": "100" },
-        { "label": "Lines to launch", "value": "0" }
-      ]
-    },
-    {
-      "type": "features",
-      "heading": "Everything you need to launch",
-      "subheading": "Thoughtful defaults, fully customizable.",
-      "items": [
-        { "title": "Theme engine", "description": "Light, dark, and custom palettes driven entirely by theme.json.", "icon": "palette" },
-        { "title": "Composable sections", "description": "Reorder and configure sections from a single JSON page definition.", "icon": "layers" },
-        { "title": "Accessible by default", "description": "Semantic markup, keyboard nav, and AA contrast out of the box.", "icon": "accessibility" },
-        { "title": "Fast", "description": "Static-first rendering with Next.js App Router. Instant loads.", "icon": "zap" },
-        { "title": "Responsive", "description": "Fluid layouts that look right from phone to widescreen.", "icon": "smartphone" },
-        { "title": "Markdown blog", "description": "Write posts in Markdown with frontmatter. Categories included.", "icon": "pen-line" }
-      ]
-    },
-    {
-      "type": "pricing",
-      "heading": "Simple, honest pricing",
-      "subheading": "Start free. Upgrade when you grow.",
-      "plans": [
+      "id": "hero-section",
+      "type": "section",
+      "props": { "padding": "lg", "width": "contained" },
+      "children": [
         {
-          "name": "Starter",
-          "price": "$0",
-          "period": "forever",
-          "description": "Everything to launch a personal site.",
-          "features": ["All landing sections", "Markdown blog", "Light & dark themes", "Community support"],
-          "cta": { "label": "Get Started", "href": "/#contact", "variant": "secondary" }
-        },
-        {
-          "name": "Pro",
-          "price": "$12",
-          "period": "per month",
-          "description": "For creators who want more.",
-          "features": ["Everything in Starter", "Portfolio sections", "Custom domains", "Priority support", "Analytics"],
-          "cta": { "label": "Go Pro", "href": "/#contact", "variant": "primary" },
-          "featured": true
-        },
-        {
-          "name": "Team",
-          "price": "$49",
-          "period": "per month",
-          "description": "For teams shipping many sites.",
-          "features": ["Everything in Pro", "Unlimited sites", "Shared themes", "Roles & permissions", "SSO"],
-          "cta": { "label": "Contact Sales", "href": "/#contact", "variant": "secondary" }
+          "id": "hero-row",
+          "type": "row",
+          "props": { "align": "center" },
+          "children": [
+            {
+              "id": "hero-column",
+              "type": "column",
+              "props": { "span": 12, "align": "center" },
+              "children": [
+                {
+                  "id": "hero-heading",
+                  "type": "heading",
+                  "props": { "text": "Ship a beautiful site in minutes", "level": 1, "align": "center" },
+                  "children": []
+                },
+                {
+                  "id": "hero-text",
+                  "type": "text",
+                  "props": {
+                    "html": "<p>PageKit is a fast, customizable template system. Compose your page from ready-made blocks and edit every word, color, and link through content — <strong>no code required</strong>.</p>"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "hero-cta",
+                  "type": "button",
+                  "props": { "label": "Get Started", "href": "/#contact", "variant": "primary", "align": "center" },
+                  "children": []
+                }
+              ]
+            }
+          ]
         }
       ]
     },
     {
-      "type": "testimonials",
-      "heading": "Loved by makers",
-      "items": [
-        { "quote": "I launched my portfolio in an afternoon and it looks better than sites I paid thousands for.", "author": "Jamie Chen", "role": "Designer", "avatar": { "src": "https://i.pravatar.cc/100?img=32", "alt": "Jamie Chen" } },
-        { "quote": "The content-first approach means my non-technical client can update copy without breaking anything.", "author": "Sam Okafor", "role": "Freelance Developer", "avatar": { "src": "https://i.pravatar.cc/100?img=15", "alt": "Sam Okafor" } },
-        { "quote": "Theme switching is genuinely a one-line change. This is how templates should work.", "author": "Priya Nair", "role": "Indie Hacker", "avatar": { "src": "https://i.pravatar.cc/100?img=45", "alt": "Priya Nair" } }
+      "id": "about-section",
+      "type": "section",
+      "props": { "padding": "lg", "width": "contained" },
+      "children": [
+        {
+          "id": "about-row",
+          "type": "row",
+          "props": { "gap": "lg", "align": "center" },
+          "children": [
+            {
+              "id": "about-text-column",
+              "type": "column",
+              "props": { "span": 6, "align": "start" },
+              "children": [
+                {
+                  "id": "about-heading",
+                  "type": "heading",
+                  "props": { "text": "Content-driven by design", "level": 2, "align": "left" },
+                  "children": []
+                },
+                {
+                  "id": "about-text",
+                  "type": "text",
+                  "props": {
+                    "html": "<p>Every block on this page is defined in a JSON file. Swap the theme, reorder blocks, or rewrite copy without opening a component. PageKit handles the rendering, accessibility, and responsive layout for you.</p><ul><li>Prebuilt blocks: 11+</li><li>Lighthouse score: 100</li><li>Lines to launch: 0</li></ul>"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "about-image-column",
+              "type": "column",
+              "props": { "span": 6, "align": "center" },
+              "children": [
+                {
+                  "id": "about-image",
+                  "type": "image",
+                  "props": {
+                    "src": "https://images.unsplash.com/photo-1522542550221-31fd19575a2d?w=800",
+                    "alt": "Team collaborating around a laptop",
+                    "aspect": "4:3"
+                  },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
       ]
     },
     {
-      "type": "faq",
-      "heading": "Frequently asked questions",
-      "items": [
-        { "question": "Do I need to know how to code?", "answer": "No. Every piece of content lives in JSON and Markdown files, and a dashboard can edit them with forms generated from the schema." },
-        { "question": "Can I change the colors and fonts?", "answer": "Yes — the entire visual system is defined in theme.json. Edit the tokens and the whole site re-themes instantly, including dark mode." },
-        { "question": "Is it really free?", "answer": "The Starter tier is free forever and open source under the MIT license. Pro and Team add hosted conveniences." },
-        { "question": "What is it built with?", "answer": "Next.js App Router, TypeScript, and Tailwind CSS — modern, fast, and well-documented." }
+      "id": "divider-1",
+      "type": "divider",
+      "props": {},
+      "children": []
+    },
+    {
+      "id": "features-section",
+      "type": "section",
+      "props": { "padding": "lg", "width": "contained" },
+      "children": [
+        {
+          "id": "features-heading-row",
+          "type": "row",
+          "props": { "align": "center" },
+          "children": [
+            {
+              "id": "features-heading-column",
+              "type": "column",
+              "props": { "span": 12, "align": "center" },
+              "children": [
+                {
+                  "id": "features-heading",
+                  "type": "heading",
+                  "props": { "text": "Everything you need to launch", "level": 2, "align": "center" },
+                  "children": []
+                },
+                {
+                  "id": "features-subheading",
+                  "type": "text",
+                  "props": { "html": "<p>Thoughtful defaults, fully customizable.</p>" },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "features-spacer-row",
+          "type": "row",
+          "props": {},
+          "children": [
+            {
+              "id": "features-spacer-column",
+              "type": "column",
+              "props": { "span": 12 },
+              "children": [
+                {
+                  "id": "features-spacer",
+                  "type": "spacer",
+                  "props": { "size": "md" },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "features-row",
+          "type": "row",
+          "props": { "gap": "md", "align": "start" },
+          "children": [
+            {
+              "id": "feature-col-1",
+              "type": "column",
+              "props": { "span": 4, "align": "start" },
+              "children": [
+                {
+                  "id": "feature-heading-1",
+                  "type": "heading",
+                  "props": { "text": "Theme engine", "level": 3, "align": "left" },
+                  "children": []
+                },
+                {
+                  "id": "feature-text-1",
+                  "type": "text",
+                  "props": { "html": "<p>Light, dark, and custom palettes driven entirely by <em>theme.json</em>.</p>" },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "feature-col-2",
+              "type": "column",
+              "props": { "span": 4, "align": "start" },
+              "children": [
+                {
+                  "id": "feature-heading-2",
+                  "type": "heading",
+                  "props": { "text": "Composable blocks", "level": 3, "align": "left" },
+                  "children": []
+                },
+                {
+                  "id": "feature-text-2",
+                  "type": "text",
+                  "props": { "html": "<p>Nest sections, rows, and columns to build any layout from a single JSON page tree.</p>" },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": "feature-col-3",
+              "type": "column",
+              "props": { "span": 4, "align": "start" },
+              "children": [
+                {
+                  "id": "feature-heading-3",
+                  "type": "heading",
+                  "props": { "text": "Fast", "level": 3, "align": "left" },
+                  "children": []
+                },
+                {
+                  "id": "feature-text-3",
+                  "type": "text",
+                  "props": { "html": "<p>Static-first rendering with Next.js App Router. Instant loads.</p>" },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
       ]
     },
     {
-      "type": "contact",
-      "heading": "Ready to build?",
-      "subheading": "Tell us what you're making and we'll help you get started.",
-      "email": "hello@pagekit.dev"
+      "id": "blog-section",
+      "type": "section",
+      "props": { "padding": "lg", "width": "contained", "background": { "color": "var(--color-muted)" } },
+      "children": [
+        {
+          "id": "blog-heading-row",
+          "type": "row",
+          "props": { "align": "center" },
+          "children": [
+            {
+              "id": "blog-heading-column",
+              "type": "column",
+              "props": { "span": 12, "align": "center" },
+              "children": [
+                {
+                  "id": "blog-heading",
+                  "type": "heading",
+                  "props": { "text": "From the blog", "level": 2, "align": "center" },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "blog-post-list-row",
+          "type": "row",
+          "props": {},
+          "children": [
+            {
+              "id": "blog-post-list-column",
+              "type": "column",
+              "props": { "span": 12 },
+              "children": [
+                {
+                  "id": "blog-post-list",
+                  "type": "post-list",
+                  "props": { "limit": 3 },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "contact-section",
+      "type": "section",
+      "props": { "padding": "lg", "width": "contained" },
+      "children": [
+        {
+          "id": "contact-row",
+          "type": "row",
+          "props": { "align": "center" },
+          "children": [
+            {
+              "id": "contact-column",
+              "type": "column",
+              "props": { "span": 12, "align": "center" },
+              "children": [
+                {
+                  "id": "contact-heading",
+                  "type": "heading",
+                  "props": { "text": "Ready to build?", "level": 2, "align": "center" },
+                  "children": []
+                },
+                {
+                  "id": "contact-text",
+                  "type": "text",
+                  "props": {
+                    "html": "<p>Tell us what you're making and we'll help you get started. Reach out any time at <a href=\"mailto:hello@pagekit.dev\">hello@pagekit.dev</a>.</p>"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "contact-cta",
+                  "type": "button",
+                  "props": { "label": "Email us", "href": "mailto:hello@pagekit.dev", "variant": "primary", "align": "center" },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ]
 }

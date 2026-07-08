@@ -1,127 +1,122 @@
-# PageKit 架構：Schema 驅動、程式碼與內容分離
+# PageKit 架構：Block Tree 驅動、程式碼與內容分離
 
 ## 核心目標
 
-> **Dashboard 與 AI 只能操作 schema（內容）。兩者都不能產生 React code。**
+> **Dashboard 與 AI 只能操作內容（block tree JSON）。兩者都不能產生 React code。**
 
 整個系統因此切成兩個互不重疊的平面：
 
 | 平面 | 內容物 | 誰能改 | 形式 |
 |---|---|---|---|
-| **內容平面 (Content Plane)** | `content/profile.json`、`content/theme.json`、`content/navigation.json`、`content/pages/*.json`、`content/posts/*.md` | Dashboard、AI | 純資料，必須通過 Zod schema 驗證 |
-| **程式碼平面 (Code Plane)** | section React 元件、registry、renderer、theme engine | 只有工程師（含用 Claude Code 開發時） | TypeScript / React |
+| **內容平面 (Content Plane)** | `content/profile.json`、`content/theme.json`、`content/navigation.json`、`content/pages/*.json`、`content/posts/*.md` | Dashboard、AI | 純資料，必須通過 `lib/blocks/validate.ts` 驗證 |
+| **程式碼平面 (Code Plane)** | block 元件、registry、renderer、theme engine 、vendored `lib/blocks/` | 只有工程師（含用 Claude Code 開發時） | TypeScript / React |
 
-**registry 是唯一的橋**：它把 schema 裡的 `type` 字面量對應到預先寫好的 React 元件。內容平面只能「引用」既有的 section 類型，永遠無法「定義」新的渲染行為。
-
----
-
-## 1. Schema 設計（內容平面的契約）
-
-全部集中在 `lib/schemas.ts`，既是執行期驗證（Zod）也是編譯期型別（`z.infer`）。Dashboard 的表單與 AI 的輸出都直接由這些 schema 生成／約束。
-
-- **`profileSchema`** — 站台身份：`siteName`、`tagline`、`author`、`contact`、`socials`。
-- **`themeSchema`** — 視覺系統：`colors.light` / `colors.dark`（各 13 個 token）、`fonts`、`radius`、`defaultMode`。配色是**資料**，不是 code（見第 5 節）。
-- **`pageSchema`** — 一個頁面 = `{ title, description?, sections: Section[] }`。
-- **`sectionSchema`** — 以 `type` 為判別鍵的 **discriminated union**。這是整個架構的關鍵：
-  - 它是一個**封閉集合**。`type` 只能是 union 內既有的字面量（`hero`、`about`、`features`…）。
-  - 任何帶有未知 `type` 的 JSON，`sectionSchema.parse()` 會**直接拒絕**。
-  - 因此內容平面不可能引入「沒有對應元件」的 section。
-
-> 新增一種 section **類型**（改 union + 寫元件 + 登記 registry）是工程動作，要經 code review。
-> 新增一個 section **實例**（在 JSON 裡多放一個 `{ "type": "hero", ... }`）是純內容動作，Dashboard/AI 隨意做。
+**`components/blocks/registry.tsx` 是唯一的橋**：它把 block 的 `type` 字串對應到預先寫好的 React 元件。內容平面只能「引用」既有的 block 類型，永遠無法「定義」新的渲染行為——而且引用了不存在的類型也不會炸頁面，只會優雅降級（見下）。
 
 ---
 
-## 2. Section Registry（橋接層）
+## 1. Vendored `lib/blocks/`（權威定義，來自 page-kit 主 repo）
 
-`components/sections/registry.tsx`。用 mapped type 強制「每一個 section 類型都必須有一個元件，且元件的 props 形狀必須與該 section 變體完全吻合」：
+`lib/blocks/schema.ts`、`lib/blocks/validate.ts`、`lib/blocks/html.ts` 三個檔案是從 page-kit（`src/lib/blocks/`）**逐字複製**過來的，檔頭都有 `VENDORED FROM ...` 標記。**這個 repo 不改這三個檔**；schema 要變動時，先改 page-kit 那邊，測試過再同步複製過來。除了 zod，這三個檔刻意保持零依賴，方便原封不動地搬移。
+
+- `schema.ts` — `BlockNode`（`{id, type, props, children}` 遞迴樹）、`PageDocument`（`{version, slug, title, meta?, blocks}`）、`blockPropsRegistry`（每種已知 type 的 props zod schema）、`containerChildRules`（容器允許哪些已知子節點）、`CONTENT_BLOCK_TYPES`、`MAX_BLOCK_DEPTH`。
+- `validate.ts` — `validatePageDocument(input)`：結構層（id/type/props/children/version/slug）嚴格檢查，錯了就整份拒絕；block type 層寬鬆——未知 type 只是 warning，讓新編輯器產出的文件在舊程式碼上仍可驗證（降級渲染）。
+- `html.ts` — `sanitizeRestrictedHtml()` / `findDisallowedHtmlTags()`：`text` block 的 `html` 只允許 `p/br/strong/em/b/i/a/ul/ol/li`，其餘標籤剝除但保留文字內容；`<a>` 只留安全的 `href`。
+
+---
+
+## 2. 內容模型：Block Tree
+
+一個頁面 = `PageDocument`：
+
+```ts
+{
+  version: 1,
+  slug: "landing",       // ^[a-z0-9][a-z0-9-]*$
+  title: "...",
+  meta?: { description?: string },
+  blocks: BlockNode[]
+}
+```
+
+`BlockNode` 是遞迴樹：`{ id, type, props, children }`。`type` 刻意是開放字串（不是封閉 union）——未知類型不會讓整份文件解析失敗，只會在驗證與渲染兩層分別警告、跳過。
+
+11 種已知 block type（`blockPropsRegistry` 的 key）：
+
+- 版面容器（`containerChildRules` 定義巢狀規則）：`section`（只能放 `row`）→ `row`（只能放 `column`）→ `column`（放內容 block 或再一層 `row`）。
+- 內容 block（葉節點，不能有 children）：`heading`、`text`、`image`、`button`、`divider`、`spacer`、`raw-html`、`post-list`。
+
+`post-list` 是唯一的 async server component（呼叫 `getAllPosts()`），其餘都是同步元件。
+
+---
+
+## 3. Block Registry（橋接層）
+
+`components/blocks/registry.tsx`：
 
 ```tsx
-import type { ComponentType } from "react";
-import type { Section, SectionType } from "@/lib/schemas";
+export type BlockComponentProps = { node: BlockNode; children?: ReactNode };
 
-// 取出某個 type 對應的 section 變體
-type SectionProps<T extends SectionType> = Extract<Section, { type: T }>;
-
-// 強制涵蓋所有 SectionType；少一個就編譯失敗
-type SectionRegistry = { [T in SectionType]: ComponentType<SectionProps<T>> };
-
-export const sectionRegistry: SectionRegistry = {
-  hero: HeroSection,
-  about: AboutSection,
-  features: FeaturesSection,
-  services: ServicesSection,
-  projects: ProjectsSection,
-  testimonials: TestimonialsSection,
-  faq: FaqSection,
-  pricing: PricingSection,
-  contact: ContactSection,
+export const blockRegistry: Record<string, ComponentType<BlockComponentProps>> = {
+  section: Section, row: Row, column: Column,
+  heading: Heading, text: Text, image: Image, button: Button,
+  divider: Divider, spacer: Spacer, "raw-html": RawHtml, "post-list": PostList,
 };
 ```
 
-**雙向保證**：
-- schema 端：`sectionSchema` 拒絕未知 type → 內容不會引用不存在的元件。
-- registry 端：`{ [T in SectionType]: ... }` → 加了新 type 卻忘了寫元件，**`npm run typecheck` 直接報錯**。
-
-兩邊夾住，內容平面與程式碼平面永遠保持同步，而 Dashboard/AI 完全碰不到這個檔案。
+因為 `type` 是開放字串，這裡不是（也不能是）像舊 `SectionType` 那樣的窮舉映射——`Record<string, ...>` 才能表達「型別上允許未知 key，執行期查不到就降級」。新增一種 block **類型**（改 vendored schema + 寫元件 + 登記 registry）是工程動作；新增一個 block **實例**（JSON 裡多放一個 `{type:"heading",...}`）是純內容動作，Dashboard/AI 隨意做。
 
 ---
 
-## 3. Renderer 架構（資料 → 畫面）
+## 4. Renderer 架構與優雅降級合約
 
-`components/PageRenderer.tsx`。把驗證過的 `Page` 走訪、查 registry、渲染。它**不含任何 section-specific 邏輯**——只是查表。
+`components/blocks/BlockRenderer.tsx` 遞迴走訪 `blocks: BlockNode[]`，對每個節點：
 
-```tsx
-import type { Page, Section } from "@/lib/schemas";
-import { sectionRegistry } from "@/components/sections/registry";
-
-function renderSection(section: Section, index: number) {
-  // 依 type 縮窄；registry 已保證型別吻合
-  const Component = sectionRegistry[section.type] as ComponentType<typeof section>;
-  return <Component key={index} {...section} />;
-}
-
-export function PageRenderer({ page }: { page: Page }) {
-  return <>{page.sections.map(renderSection)}</>;
-}
-```
-
-完整資料流：
+1. **未知 type**（`blockRegistry` 查無元件）→ `console.warn` 一次（含 `id`、`page` slug），整個子樹回傳 `null` 跳過，頁面其餘部分照常渲染。
+2. **props 驗證失敗**（防禦性：正常情況下 `getPage()` 已經在 build 時擋掉）→ warn 一次並跳過該節點。
+3. **已知容器下出現不被允許的已知子節點**（例如 `section` 下直接放 `heading`，而 `containerChildRules.section = ["row"]`）→ 自動包上該容器的預設子鏈（`section→row→column`）再渲染，並 warn 一次。包裝節點的 id 用 `__auto-<type>-<原id>` 命名以避免撞號。
 
 ```
-content/pages/*.json · content/posts/*.md (Dashboard/AI 產出)
+content/pages/*.json (Dashboard/AI 產出)
       │
       ▼
-lib/content.ts  ──►  schema.parse()   ← 信任邊界：未驗證的資料到此為止
-   getPage()           │ 失敗 → 拋錯、拒絕載入，不渲染
-      ▼ 驗證過、帶型別 (Page)
-PageRenderer  ──►  sectionRegistry[type]  ──►  <XxxSection {...props} />
+lib/content.ts getPage()  ──►  validatePageDocument()   ← 信任邊界
+      │ errors 非空 → throw，拒絕載入；warnings → console.warn 逐條印
+      ▼ 驗證過的 PageDocument
+BlockRenderer  ──►  blockRegistry[type]  ──►  <XxxBlock node={...}>{children}</XxxBlock>
+                     │ 查無 → warn + 跳過子樹
+                     │ 已知子節點放錯位置 → warn + 自動包容器
 ```
 
-> 實際路徑慣例（見 `lib/content.ts`）：頁面在 `content/pages/<name>.json`，
-> 部落格在 `content/posts/<slug>.md`，單例設定在 `content/` 根目錄。
+每個 warning 都會同時出現在兩層：`lib/content.ts`（load 時，來自 `validatePageDocument` 的 warnings 陣列）與 `BlockRenderer`（render 時，同一批問題會被獨立偵測一次，因為 renderer 不能假設呼叫端一定跑過驗證）。
 
 ---
 
-## 4. 內容載入器（信任邊界）
+## 5. 內容載入器（信任邊界）
 
-`lib/content.ts`（標記 `server-only`）是內容平面進入系統的唯一閘門。所有來自 Dashboard/AI 的 JSON / markdown 都必須在這裡通過 `schema.parse()` 才會被渲染——驗證失敗就拋錯拒絕，不會有「未驗證資料」流進元件。元件本身**永遠不讀檔**，只接收已驗證、帶型別的資料。已實作於本 repo（`getProfile / getTheme / getNavigation / getPage / getAllPosts / getPost / getCategories`）。
+`lib/content.ts`（標記 `server-only`）：
+
+- `getPage(slug)` — 讀 `content/pages/<slug>.json` → `validatePageDocument()`。有 `errors` 就 throw，訊息逐條列出 `path: message`；有 `warnings` 就 `console.warn`（不擋渲染）。回傳型別是 vendored 的 `PageDocument`。
+- `getPageSlugs()` — 掃 `content/pages/*.json` 檔名，防禦性排除 `"blog"`（`app/blog` 是實體路由，不能被同名內容頁蓋掉）。
+
+## 6. 路由
+
+- `app/page.tsx` — `getPage("landing")` → `<BlockRenderer blocks={page.blocks} pageSlug="landing" />`。
+- `app/[slug]/page.tsx` — `generateStaticParams` 用 `getPageSlugs()`（排除 `landing`，它是首頁）；找不到對應檔案（不在 `getPageSlugs()` 清單）就 `notFound()`。
 
 ---
 
-## 5. Theme 也是資料
+## 7. Theme 也是資料
 
-`theme.json` → theme engine (`lib/theme/`) → 在執行期注入 CSS 變數（`--color-primary` 等）。section 元件只用 Tailwind 的 token class（`bg-primary`、`text-muted-foreground`…），對應這些變數。
-
-結果：**連視覺風格都是內容**。換主題 = 改 `theme.json`，不需動任何 React。Dashboard/AI 改配色也只是在編輯 schema。
+`theme.json` → theme engine (`lib/theme/`) → 在執行期注入 CSS 變數（`--color-primary` 等）。block 元件只用 Tailwind 的 token class（`bg-primary`、`text-muted-foreground`…）或直接讀 `var(--color-*)`（例如 `section.background.color`），對應這些變數。換主題 = 改 `theme.json`，不需動任何 React。
 
 ---
 
 ## 為什麼這樣就達成目標
 
-1. Dashboard/AI 的輸出**只有 JSON / markdown**，且一律經 Zod 驗證。
-2. `sectionSchema` 是封閉 union → 內容無法引入新的渲染行為，只能組合既有 section。
-3. 新行為（新 section 類型）**必然**要在程式碼平面新增元件並登記 registry → 落在工程師與 code review 的守備範圍。
-4. registry 的 mapped type 確保兩平面永遠同步，缺漏在 `typecheck` 就被擋下。
+1. Dashboard/AI 的輸出**只有 JSON / markdown**，且一律經 `validatePageDocument()` 驗證。
+2. `type` 開放字串 + 兩層降級（未知類型跳過、已知類型錯放自動包容器）→ 內容平面即使產出「程式碼平面尚未支援」的 block，也不會讓整頁掛掉，只會局部降級。
+3. 新行為（新 block 類型）**必然**要在程式碼平面新增元件並登記 `blockRegistry` → 落在工程師與 code review 的守備範圍；schema 本身改動則落在 page-kit 主 repo，vendored 副本手動同步。
+4. `lib/blocks/` 三個檔案零依賴、逐字同步，保證 page-kit（編輯器/驗證）與 page-kit-starter（渲染）看到的是同一份權威定義，不會分裂成兩套規則。
 
-→ Dashboard 與 AI 能完全掌控**內容**，卻在架構上**無法**產生或修改 React。
+→ Dashboard 與 AI 能完全掌控**內容**（包含任意深度的巢狀佈局），卻在架構上**無法**產生或修改 React，也無法讓渲染直接崩潰。

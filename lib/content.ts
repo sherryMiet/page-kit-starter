@@ -2,14 +2,14 @@ import "server-only";
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
+import { validatePageDocument } from "./blocks/validate";
+import type { PageDocument } from "./blocks/schema";
 import {
   navigationSchema,
-  pageSchema,
   postFrontmatterSchema,
   profileSchema,
   themeSchema,
   type Navigation,
-  type Page,
   type Post,
   type Profile,
   type Theme,
@@ -47,8 +47,34 @@ export function getNavigation(): Navigation {
   return readJson("navigation.json", (d) => navigationSchema.parse(d));
 }
 
-export function getPage(name: string): Page {
-  return readJson(`pages/${name}.json`, (d) => pageSchema.parse(d));
+const PAGES_DIR = path.join(CONTENT_DIR, "pages");
+
+export function getPage(slug: string): PageDocument {
+  return readJson(`pages/${slug}.json`, (d) => {
+    const result = validatePageDocument(d);
+    if (result.errors.length > 0) {
+      const lines = result.errors.map((issue) => `  - ${issue.path}: ${issue.message}`);
+      throw new Error(`Invalid page "content/pages/${slug}.json":\n${lines.join("\n")}`);
+    }
+    for (const warning of result.warnings) {
+      console.warn(`[content] content/pages/${slug}.json — ${warning.path}: ${warning.message}`);
+    }
+    return d as PageDocument;
+  });
+}
+
+/**
+ * Slugs of every page under content/pages, derived from filenames. Defensively
+ * excludes "blog", which is always a real route (app/blog) and must never be
+ * shadowed by a content page of the same slug.
+ */
+export function getPageSlugs(): string[] {
+  if (!fs.existsSync(PAGES_DIR)) return [];
+  return fs
+    .readdirSync(PAGES_DIR)
+    .filter((f) => f.endsWith(".json"))
+    .map((f) => f.replace(/\.json$/, ""))
+    .filter((slug) => slug !== "blog");
 }
 
 /* -------------------------------- Blog -------------------------------- */

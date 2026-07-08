@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "slug": "about",
+  "title": "About — PageKit",
+  "meta": {
+    "description": "Who's behind PageKit and what we're building."
+  },
+  "blocks": [
+    {
+      "id": "about-page-section",
+      "type": "section",
+      "props": { "padding": "lg", "width": "contained" },
+      "children": [
+        {
+          "id": "about-page-row",
+          "type": "row",
+          "props": { "align": "center" },
+          "children": [
+            {
+              "id": "about-page-column",
+              "type": "column",
+              "props": { "span": 8, "align": "start" },
+              "children": [
+                {
+                  "id": "about-page-heading",
+                  "type": "heading",
+                  "props": { "text": "About PageKit", "level": 1, "align": "left" },
+                  "children": []
+                },
+                {
+                  "id": "about-page-text",
+                  "type": "text",
+                  "props": {
+                    "html": "<p>PageKit started as an internal tool for shipping client sites without touching code for every copy change. It grew into a content-first template system: edit <strong>everything</strong> — text, images, theme, layout — through JSON and Markdown, and let the renderer do the rest.</p><p>We believe the fastest way to launch a site is to separate <em>content</em> from <em>code</em> completely.</p>"
+                  },
+                  "children": []
+                },
+                {
+                  "id": "about-page-button",
+                  "type": "button",
+                  "props": { "label": "Back to home", "href": "/", "variant": "secondary", "align": "left" },
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
