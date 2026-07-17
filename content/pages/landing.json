@@ -1,30 +1,41 @@
 {
-  "version": 1,
-  "slug": "landing",
-  "title": "PageKit — Ship a beautiful site in minutes",
   "meta": {
     "description": "A fast, customizable website template system. Edit everything through content — no code required."
   },
+  "slug": "landing",
+  "title": "PageKit — Ship a beautiful site in minutes",
   "blocks": [
     {
       "id": "hero-section",
       "type": "section",
-      "props": { "padding": "lg", "width": "contained" },
+      "props": {
+        "width": "contained",
+        "padding": "lg"
+      },
       "children": [
         {
           "id": "hero-row",
           "type": "row",
-          "props": { "align": "center" },
+          "props": {
+            "align": "center"
+          },
           "children": [
             {
               "id": "hero-column",
               "type": "column",
-              "props": { "span": 12, "align": "center" },
+              "props": {
+                "span": 12,
+                "align": "center"
+              },
               "children": [
                 {
                   "id": "hero-heading",
                   "type": "heading",
-                  "props": { "text": "Ship a beautiful site in minutes", "level": 1, "align": "center" },
+                  "props": {
+                    "text": "Ship a beautiful site in minutes",
+                    "align": "center",
+                    "level": 1
+                  },
                   "children": []
                 },
                 {
@@ -38,7 +49,12 @@
                 {
                   "id": "hero-cta",
                   "type": "button",
-                  "props": { "label": "Get Started", "href": "/#contact", "variant": "primary", "align": "center" },
+                  "props": {
+                    "href": "/#contact",
+                    "align": "center",
+                    "label": "Get Started",
+                    "variant": "primary"
+                  },
                   "children": []
                 }
               ]
@@ -50,22 +66,35 @@
     {
       "id": "about-section",
       "type": "section",
-      "props": { "padding": "lg", "width": "contained" },
+      "props": {
+        "width": "contained",
+        "padding": "lg"
+      },
       "children": [
         {
           "id": "about-row",
           "type": "row",
-          "props": { "gap": "lg", "align": "center" },
+          "props": {
+            "gap": "lg",
+            "align": "center"
+          },
           "children": [
             {
               "id": "about-text-column",
               "type": "column",
-              "props": { "span": 6, "align": "start" },
+              "props": {
+                "span": 6,
+                "align": "start"
+              },
               "children": [
                 {
                   "id": "about-heading",
                   "type": "heading",
-                  "props": { "text": "Content-driven by design", "level": 2, "align": "left" },
+                  "props": {
+                    "text": "Content-driven by design",
+                    "align": "left",
+                    "level": 2
+                  },
                   "children": []
                 },
                 {
@@ -81,14 +110,17 @@
             {
               "id": "about-image-column",
               "type": "column",
-              "props": { "span": 6, "align": "center" },
+              "props": {
+                "span": 6,
+                "align": "center"
+              },
               "children": [
                 {
                   "id": "about-image",
                   "type": "image",
                   "props": {
-                    "src": "https://images.unsplash.com/photo-1522542550221-31fd19575a2d?w=800",
                     "alt": "Team collaborating around a laptop",
+                    "src": "https://images.unsplash.com/photo-1522542550221-31fd19575a2d?w=800",
                     "aspect": "4:3"
                   },
                   "children": []
@@ -108,28 +140,42 @@
     {
       "id": "features-section",
       "type": "section",
-      "props": { "padding": "lg", "width": "contained" },
+      "props": {
+        "width": "contained",
+        "padding": "lg"
+      },
       "children": [
         {
           "id": "features-heading-row",
           "type": "row",
-          "props": { "align": "center" },
+          "props": {
+            "align": "center"
+          },
           "children": [
             {
               "id": "features-heading-column",
               "type": "column",
-              "props": { "span": 12, "align": "center" },
+              "props": {
+                "span": 12,
+                "align": "center"
+              },
               "children": [
                 {
                   "id": "features-heading",
                   "type": "heading",
-                  "props": { "text": "Everything you need to launch", "level": 2, "align": "center" },
+                  "props": {
+                    "text": "Everything you need to launch",
+                    "align": "center",
+                    "level": 2
+                  },
                   "children": []
                 },
                 {
                   "id": "features-subheading",
                   "type": "text",
-                  "props": { "html": "<p>Thoughtful defaults, fully customizable.</p>" },
+                  "props": {
+                    "html": "<p>Thoughtful defaults, fully customizable.</p>"
+                  },
                   "children": []
                 }
               ]
@@ -144,12 +190,16 @@
             {
               "id": "features-spacer-column",
               "type": "column",
-              "props": { "span": 12 },
+              "props": {
+                "span": 12
+              },
               "children": [
                 {
                   "id": "features-spacer",
                   "type": "spacer",
-                  "props": { "size": "md" },
+                  "props": {
+                    "size": "md"
+                  },
                   "children": []
                 }
               ]
@@ -159,23 +209,35 @@
         {
           "id": "features-row",
           "type": "row",
-          "props": { "gap": "md", "align": "start" },
+          "props": {
+            "gap": "md",
+            "align": "start"
+          },
           "children": [
             {
               "id": "feature-col-1",
               "type": "column",
-              "props": { "span": 4, "align": "start" },
+              "props": {
+                "span": 4,
+                "align": "start"
+              },
               "children": [
                 {
                   "id": "feature-heading-1",
                   "type": "heading",
-                  "props": { "text": "Theme engine", "level": 3, "align": "left" },
+                  "props": {
+                    "text": "Theme engine",
+                    "align": "left",
+                    "level": 3
+                  },
                   "children": []
                 },
                 {
                   "id": "feature-text-1",
                   "type": "text",
-                  "props": { "html": "<p>Light, dark, and custom palettes driven entirely by <em>theme.json</em>.</p>" },
+                  "props": {
+                    "html": "<p>Light, dark, and custom palettes driven entirely by <em>theme.json</em>.</p>"
+                  },
                   "children": []
                 }
               ]
@@ -183,18 +245,27 @@
             {
               "id": "feature-col-2",
               "type": "column",
-              "props": { "span": 4, "align": "start" },
+              "props": {
+                "span": 4,
+                "align": "start"
+              },
               "children": [
                 {
                   "id": "feature-heading-2",
                   "type": "heading",
-                  "props": { "text": "Composable blocks", "level": 3, "align": "left" },
+                  "props": {
+                    "text": "Composable blocks",
+                    "align": "left",
+                    "level": 3
+                  },
                   "children": []
                 },
                 {
                   "id": "feature-text-2",
                   "type": "text",
-                  "props": { "html": "<p>Nest sections, rows, and columns to build any layout from a single JSON page tree.</p>" },
+                  "props": {
+                    "html": "<p>Nest sections, rows, and columns to build any layout from a single JSON page tree.</p>"
+                  },
                   "children": []
                 }
               ]
@@ -202,18 +273,27 @@
             {
               "id": "feature-col-3",
               "type": "column",
-              "props": { "span": 4, "align": "start" },
+              "props": {
+                "span": 4,
+                "align": "start"
+              },
               "children": [
                 {
                   "id": "feature-heading-3",
                   "type": "heading",
-                  "props": { "text": "Fast", "level": 3, "align": "left" },
+                  "props": {
+                    "text": "Fast",
+                    "align": "left",
+                    "level": 3
+                  },
                   "children": []
                 },
                 {
                   "id": "feature-text-3",
                   "type": "text",
-                  "props": { "html": "<p>Static-first rendering with Next.js App Router. Instant loads.</p>" },
+                  "props": {
+                    "html": "<p>Static-first rendering with Next.js App Router. Instant loads.</p>"
+                  },
                   "children": []
                 }
               ]
@@ -225,22 +305,37 @@
     {
       "id": "blog-section",
       "type": "section",
-      "props": { "padding": "lg", "width": "contained", "background": { "color": "var(--color-muted)" } },
+      "props": {
+        "width": "contained",
+        "padding": "lg",
+        "background": {
+          "color": "var(--color-muted)"
+        }
+      },
       "children": [
         {
           "id": "blog-heading-row",
           "type": "row",
-          "props": { "align": "center" },
+          "props": {
+            "align": "center"
+          },
           "children": [
             {
               "id": "blog-heading-column",
               "type": "column",
-              "props": { "span": 12, "align": "center" },
+              "props": {
+                "span": 12,
+                "align": "center"
+              },
               "children": [
                 {
                   "id": "blog-heading",
                   "type": "heading",
-                  "props": { "text": "From the blog", "level": 2, "align": "center" },
+                  "props": {
+                    "text": "From the blog",
+                    "align": "center",
+                    "level": 2
+                  },
                   "children": []
                 }
               ]
@@ -255,12 +350,16 @@
             {
               "id": "blog-post-list-column",
               "type": "column",
-              "props": { "span": 12 },
+              "props": {
+                "span": 12
+              },
               "children": [
                 {
                   "id": "blog-post-list",
                   "type": "post-list",
-                  "props": { "limit": 3 },
+                  "props": {
+                    "limit": 3
+                  },
                   "children": []
                 }
               ]
@@ -272,22 +371,34 @@
     {
       "id": "contact-section",
       "type": "section",
-      "props": { "padding": "lg", "width": "contained" },
+      "props": {
+        "width": "contained",
+        "padding": "lg"
+      },
       "children": [
         {
           "id": "contact-row",
           "type": "row",
-          "props": { "align": "center" },
+          "props": {
+            "align": "center"
+          },
           "children": [
             {
               "id": "contact-column",
               "type": "column",
-              "props": { "span": 12, "align": "center" },
+              "props": {
+                "span": 12,
+                "align": "center"
+              },
               "children": [
                 {
                   "id": "contact-heading",
                   "type": "heading",
-                  "props": { "text": "Ready to build?", "level": 2, "align": "center" },
+                  "props": {
+                    "text": "Ready to build?",
+                    "align": "center",
+                    "level": 2
+                  },
                   "children": []
                 },
                 {
@@ -301,7 +412,12 @@
                 {
                   "id": "contact-cta",
                   "type": "button",
-                  "props": { "label": "Email us", "href": "mailto:hello@pagekit.dev", "variant": "primary", "align": "center" },
+                  "props": {
+                    "href": "mailto:hello@pagekit.dev",
+                    "align": "center",
+                    "label": "Email us",
+                    "variant": "primary"
+                  },
                   "children": []
                 }
               ]
@@ -310,5 +426,6 @@
         }
       ]
     }
-  ]
+  ],
+  "version": 1
 }
