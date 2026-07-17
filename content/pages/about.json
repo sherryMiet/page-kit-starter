@@ -1,30 +1,41 @@
 {
-  "version": 1,
-  "slug": "about",
-  "title": "About — PageKit",
   "meta": {
     "description": "Who's behind PageKit and what we're building."
   },
+  "slug": "about",
+  "title": "About — PageKit",
   "blocks": [
     {
       "id": "about-page-section",
       "type": "section",
-      "props": { "padding": "lg", "width": "contained" },
+      "props": {
+        "width": "contained",
+        "padding": "lg"
+      },
       "children": [
         {
           "id": "about-page-row",
           "type": "row",
-          "props": { "align": "center" },
+          "props": {
+            "align": "center"
+          },
           "children": [
             {
               "id": "about-page-column",
               "type": "column",
-              "props": { "span": 8, "align": "start" },
+              "props": {
+                "span": 8,
+                "align": "start"
+              },
               "children": [
                 {
                   "id": "about-page-heading",
                   "type": "heading",
-                  "props": { "text": "About PageKit", "level": 1, "align": "left" },
+                  "props": {
+                    "text": "About PageKit",
+                    "align": "left",
+                    "level": 1
+                  },
                   "children": []
                 },
                 {
@@ -38,7 +49,12 @@
                 {
                   "id": "about-page-button",
                   "type": "button",
-                  "props": { "label": "Back to home", "href": "/", "variant": "secondary", "align": "left" },
+                  "props": {
+                    "href": "/",
+                    "align": "left",
+                    "label": "Back to home",
+                    "variant": "secondary"
+                  },
                   "children": []
                 }
               ]
@@ -47,5 +63,6 @@
         }
       ]
     }
-  ]
+  ],
+  "version": 1
 }
