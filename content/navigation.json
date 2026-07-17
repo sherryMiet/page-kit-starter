@@ -1,40 +1,80 @@
 {
-  "schemaVersion": "1.0.0",
-  "header": {
-    "links": [
-      { "label": "Features", "href": "/#features" },
-      { "label": "Pricing", "href": "/#pricing" },
-      { "label": "Blog", "href": "/blog" },
-      { "label": "FAQ", "href": "/#faq" }
-    ],
-    "cta": { "label": "Get Started", "href": "/#contact", "variant": "primary" }
-  },
   "footer": {
+    "note": "Built with PageKit — open source under the MIT license.",
     "groups": [
       {
-        "title": "Product",
         "links": [
-          { "label": "Features", "href": "/#features" },
-          { "label": "Pricing", "href": "/#pricing" },
-          { "label": "Changelog", "href": "/blog" }
-        ]
+          {
+            "href": "/#features",
+            "label": "Features"
+          },
+          {
+            "href": "/#pricing",
+            "label": "Pricing"
+          },
+          {
+            "href": "/blog",
+            "label": "Changelog"
+          }
+        ],
+        "title": "Product"
       },
       {
-        "title": "Company",
         "links": [
-          { "label": "About", "href": "/#about" },
-          { "label": "Blog", "href": "/blog" },
-          { "label": "Contact", "href": "/#contact" }
-        ]
+          {
+            "href": "/#about",
+            "label": "About"
+          },
+          {
+            "href": "/blog",
+            "label": "Blog"
+          },
+          {
+            "href": "/#contact",
+            "label": "Contact"
+          }
+        ],
+        "title": "Company"
       },
       {
-        "title": "Legal",
         "links": [
-          { "label": "Privacy", "href": "/privacy" },
-          { "label": "Terms", "href": "/terms" }
-        ]
+          {
+            "href": "/privacy",
+            "label": "Privacy"
+          },
+          {
+            "href": "/terms",
+            "label": "Terms"
+          }
+        ],
+        "title": "Legal"
       }
-    ],
-    "note": "Built with PageKit — open source under the MIT license."
-  }
+    ]
+  },
+  "header": {
+    "cta": {
+      "href": "/#contact",
+      "label": "Get Started",
+      "variant": "primary"
+    },
+    "links": [
+      {
+        "href": "/#features",
+        "label": "Features"
+      },
+      {
+        "href": "/#pricing",
+        "label": "Pricing"
+      },
+      {
+        "href": "/blog",
+        "label": "Blog"
+      },
+      {
+        "href": "/#faq",
+        "label": "FAQ"
+      }
+    ]
+  },
+  "schemaVersion": "1.0.0"
 }
