@@ -1,80 +1,40 @@
 {
+  "schemaVersion": "1.0.0",
+  "header": {
+    "links": [
+      { "label": "Features", "href": "/#features" },
+      { "label": "Pricing", "href": "/#pricing" },
+      { "label": "Blog", "href": "/blog" },
+      { "label": "FAQ", "href": "/#faq" }
+    ],
+    "cta": { "label": "Get Started", "href": "/#contact", "variant": "primary" }
+  },
   "footer": {
-    "note": "Built with PageKit — open source under the MIT license.",
     "groups": [
       {
+        "title": "Product",
         "links": [
-          {
-            "href": "/#features",
-            "label": "Features"
-          },
-          {
-            "href": "/#pricing",
-            "label": "Pricing"
-          },
-          {
-            "href": "/blog",
-            "label": "Changelog"
-          }
-        ],
-        "title": "Product"
+          { "label": "Features", "href": "/#features" },
+          { "label": "Pricing", "href": "/#pricing" },
+          { "label": "Changelog", "href": "/blog" }
+        ]
       },
       {
+        "title": "Company",
         "links": [
-          {
-            "href": "/#about",
-            "label": "About"
-          },
-          {
-            "href": "/blog",
-            "label": "Blog"
-          },
-          {
-            "href": "/#contact",
-            "label": "Contact"
-          }
-        ],
-        "title": "Company"
+          { "label": "About", "href": "/#about" },
+          { "label": "Blog", "href": "/blog" },
+          { "label": "Contact", "href": "/#contact" }
+        ]
       },
       {
+        "title": "Legal",
         "links": [
-          {
-            "href": "/privacy",
-            "label": "Privacy"
-          },
-          {
-            "href": "/terms",
-            "label": "Terms"
-          }
-        ],
-        "title": "Legal"
+          { "label": "Privacy", "href": "/privacy" },
+          { "label": "Terms", "href": "/terms" }
+        ]
       }
-    ]
-  },
-  "header": {
-    "cta": {
-      "href": "/#contact",
-      "label": "Get Started",
-      "variant": "primary"
-    },
-    "links": [
-      {
-        "href": "/#features",
-        "label": "Features"
-      },
-      {
-        "href": "/#pricing",
-        "label": "Pricing"
-      },
-      {
-        "href": "/blog",
-        "label": "Blog"
-      },
-      {
-        "href": "/#faq",
-        "label": "FAQ"
-      }
-    ]
-  },
-  "schemaVersion": "1.0.0"
+    ],
+    "note": "Built with PageKit — open source under the MIT license."
+  }
 }
