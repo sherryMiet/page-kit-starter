@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getPage, getPageSlugs } from "@/lib/content";
+import { pageMetadata } from "@/lib/metadata";
 import { BlockRenderer } from "@/components/blocks/BlockRenderer";
 
 type Params = { params: Promise<{ slug: string }> };
@@ -14,8 +15,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
   try {
-    const page = getPage(slug);
-    return { title: page.title, description: page.meta?.description };
+    return pageMetadata(getPage(slug));
   } catch {
     return {};
   }

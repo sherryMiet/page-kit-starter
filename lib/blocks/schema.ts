@@ -28,7 +28,7 @@ export interface PageDocument {
   /** ^[a-z0-9][a-z0-9-]*$ */
   slug: string;
   title: string;
-  meta?: { description?: string };
+  meta?: { title?: string; description?: string; image?: string; noindex?: boolean };
   blocks: BlockNode[];
 }
 
@@ -58,7 +58,13 @@ export const pageDocumentSchema = z
     title: z.string(),
     meta: z
       .object({
-        description: z.string().optional()
+        /** SEO title override; the page title is used when absent. */
+        title: z.string().optional(),
+        description: z.string().optional(),
+        /** Social share (og:image) image; falls back to profile.shareImage. */
+        image: z.string().optional(),
+        /** Ask search engines not to index this page. */
+        noindex: z.boolean().optional()
       })
       .strict()
       .optional(),

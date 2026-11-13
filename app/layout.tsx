@@ -4,6 +4,7 @@ import { generateThemeCss, themeInitScript } from "@/lib/theme";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import "./globals.css";
+import { shareImages } from "@/lib/metadata";
 
 export function generateMetadata(): Metadata {
   const profile = getProfile();
@@ -17,7 +18,9 @@ export function generateMetadata(): Metadata {
       title: profile.siteName,
       description: profile.description,
       type: "website",
+      ...shareImages(),
     },
+    twitter: { card: profile.shareImage ? "summary_large_image" : "summary" },
   };
 }
 

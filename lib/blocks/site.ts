@@ -51,6 +51,8 @@ export const profileSchema = z.object({
   tagline: z.string().optional(),
   description: z.string().optional(),
   logo: imageSchema.optional(),
+  /** Default social share (og:image) image for pages without their own. */
+  shareImage: z.string().optional(),
   author: z.object({
     name: z.string(),
     role: z.string().optional(),

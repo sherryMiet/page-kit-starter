@@ -6,6 +6,7 @@ import { ArrowLeft } from "lucide-react";
 import { getAllPosts, getPost, getProfile } from "@/lib/content";
 import { Markdown } from "@/components/Markdown";
 import { formatDate } from "@/lib/utils";
+import { shareImages } from "@/lib/metadata";
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -25,6 +26,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       description: post.excerpt,
       type: "article",
       publishedTime: post.date,
+      ...shareImages(post.cover?.src),
     },
   };
 }
